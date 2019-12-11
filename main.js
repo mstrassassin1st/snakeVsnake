@@ -91,13 +91,16 @@ function main() {
     changingDirection = false;
     clearCanvas();
     drawFood();
+    changeDirection2();
+    
     advanceSnake();
+    advanceSnake2();
     drawSnake();
-    setTimeout(function(){
-        changeDirection2();
-        advanceSnake2();
-        drawSnake2();
-    });
+    drawSnake2();
+    
+    // changeDirection2();
+    // advanceSnake2();
+    // drawSnake2();
 
     // Call game again
     main();
