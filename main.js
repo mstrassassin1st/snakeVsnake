@@ -563,9 +563,15 @@ function randChooseDirection() {
     const goingLeft = dx2 === -10;
 
     //pick either 1 or -1 for direction
-    let randomness = Math.floor(Math.random() * 2) + 1;
-    if (randomess != 1){
-        randomness = -1;
+    var randomness = Math.floor(Math.random() * 2) + 1;
+    try {
+        if (randomess != 1){
+            randomness = -1;
+        } else {
+            randomness = 1;
+        }
+    } catch (error) {
+        randomness = 1;
     }
 
     if (goingUp || goingDown) {
