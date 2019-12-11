@@ -15,7 +15,10 @@ https://github.com/bgrins/javascript-astar
 Big thanks to supergoat and bgrins.
 
 Team:
-MUHAMMAD TEGUH PANGESTU - 2101654945
-AFRIEZAL LIENARDI - 2101656276
-I PUTU AGI KARASUGI - 2101663501
-VINCENZA HELIS STEVIN BER - 2101667014
+
+| Nama                      	| Nim        	|
+|---------------------------	|------------	|
+| I Putu Agi Karasugi       	| 2101663501 	|
+| Muhammad Teguh Pangestu   	| 2101654945 	|
+| Vincenza Helis Stevin Ber 	| 2101667014 	|
+| Afriezal Lienardi         	| 2101656276 	|
