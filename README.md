@@ -13,3 +13,9 @@ A* algorithm provided by
 https://github.com/bgrins/javascript-astar
 
 Big thanks to supergoat and bgrins.
+
+Team:
+MUHAMMAD TEGUH PANGESTU - 2101654945
+AFRIEZAL LIENARDI - 2101656276
+I PUTU AGI KARASUGI - 2101663501
+VINCENZA HELIS STEVIN BER - 2101667014
