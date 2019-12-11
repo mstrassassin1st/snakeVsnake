@@ -97,10 +97,6 @@ function main() {
     advanceSnake2();
     drawSnake();
     drawSnake2();
-    
-    // changeDirection2();
-    // advanceSnake2();
-    // drawSnake2();
 
     // Call game again
     main();
@@ -132,7 +128,7 @@ function drawFood() {
 /**
  * Advances the snake by changing the x-coordinates of its parts
  * according to the horizontal velocity and the y-coordinates of its parts
- * according to the vertical veolocity
+ * according to the vertical velocity
  */
 function advanceSnake() {
     // Create the new Snake's head
@@ -532,12 +528,9 @@ function makeGrid(p_coords, npc_coords){
     ];
 
     for(let i = 0; i < p_coords.length; i++){
-        console.log("p: ",p_coords[i]);
         grid[p_coords[i][0]][p_coords[i][1]] = 0;
     }
     for(let i = 0; i < npc_coords.length; i++){
-        console.log("a: ",npc_coords[i]);
-        console.log("f: ", foodX/10, foodY/10);
         grid[npc_coords[i][0]][npc_coords[i][1]] = 0;
     }
     return grid;
