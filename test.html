@@ -19,7 +19,13 @@
 	]);
 	var start = graph.grid[0][0];
 	var end = graph.grid[2][3];
-    var result = astar.search(graph, start, end);
-    console.log(result[0].y)
+	var result = astar.search(graph, start, end);
+	
+	// Validation if path is found or not
+    if (typeof(result[0]) == "undefined") {
+		alert("Path not found!");
+	} else {
+		alert(result[0])
+	}
 </script>
 </html>

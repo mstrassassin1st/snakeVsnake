@@ -550,7 +550,32 @@ function getSnakeHead(snake_coord) {
     return [snake_coord[0]['x']/10, snake_coord[0]['y']/10];
 }
 
+/**
+ * randomly chooses the direction
+ * used when the snake can't find a path to the food
+ */
+function randChooseDirection() {
+    let head = getSnakeHead(snake2);
 
+    const goingUp = dy2 === -10;
+    const goingDown = dy2 === 10;
+    const goingRight = dx2 === 10;
+    const goingLeft = dx2 === -10;
+
+    //pick either 1 or -1 for direction
+    let randomness = Math.floor(Math.random() * 2) + 1;
+    if (randomess != 1){
+        randomness = -1;
+    }
+
+    if (goingUp || goingDown) {
+        trav_x = head[0] + randomness;
+        trav_y = head[1];
+    } else if (goingLeft || goingRight) {
+        trav_x = head[0];
+        trav_y = head[1] + + randomness;
+    }
+}
 
 function getDirection() {
 
@@ -562,8 +587,13 @@ function getDirection() {
     start = graph.grid[head[0]][head[1]];
 	end = graph.grid[foodX/10][foodY/10];
     result = astar.search(graph, start, end);
-    trav_x = result[0].x;
-    trav_y = result[0].y;
+
+    if (typeof(result[0])  == "undefined") {
+        randChooseDirection();
+    } else {
+        trav_x = result[0].x;
+        trav_y = result[0].y;
+    }
 }
 
 function decideDirection() {
