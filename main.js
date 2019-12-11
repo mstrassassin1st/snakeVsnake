@@ -9,6 +9,7 @@ const FOOD_BORDER_COLOUR = 'darkred';
 //Mikha add here
 const SNAKE2_COLOUR = 'lightskyblue';
 const SNAKE2_BORDER_COLOUR = 'darkblue';
+const TARGET_SCORE = 150;
 //End add
 
 //Agi add here
@@ -62,7 +63,7 @@ const ctx = gameCanvas.getContext("2d");
 createFood();
 // Call changeDirection whenever a key is pressed
 document.addEventListener("keydown", changeDirection);
-
+document.getElementById("target").innerHTML = TARGET_SCORE;
 // DEPRECATED
 // document.addEventListener("keydown", changeDirection2);
 
@@ -184,16 +185,16 @@ function didGameEnd() {
             return true;
         } 
     }
-    for (let i = 0; i < snake.length; i++) {
-        if (snake2[0].x === snake[i].x && snake2[0].y === snake[i].y){
-            ahit = true;
-            return true
-        } 
-    }
     for (let i = 0; i < snake2.length; i++) {
         if (snake[0].x === snake2[i].x && snake[0].y === snake2[i].y){
             phit = true;
             return true  
+        } 
+    }
+    for (let i = 0; i < snake.length; i++) {
+        if (snake2[0].x === snake[i].x && snake2[0].y === snake[i].y){
+            ahit = true;
+            return true
         } 
     }
     
@@ -227,6 +228,14 @@ function didGameEnd() {
     }
     if(snake2[0].y > gameCanvas.height - 10){
         ahit = true;
+        return true;
+    }
+    if(score == TARGET_SCORE){
+        ahit = true;
+        return true;
+    }
+    if(score2 == TARGET_SCORE){
+        phit = true;
         return true;
     }
 }
@@ -396,19 +405,20 @@ function changeDirection2() {
 
 //Mikha add here
 function reset(){
+    snake2 = [
+        {x: 150, y:250},
+        {x: 140, y:250},
+        {x: 130, y:250},
+        {x: 120, y:250},
+        {x: 110, y:250}
+    ]
+    
     snake = [
         {x: 150, y: 150},
         {x: 140, y: 150},
         {x: 130, y: 150},
         {x: 120, y: 150},
         {x: 110, y: 150}
-    ]
-    snake2 = [
-        {x: 250, y:150},
-        {x: 240, y:150},
-        {x: 230, y:150},
-        {x: 220, y:150},
-        {x: 210, y:150}
     ]
     // The user's score
     score = 0;
