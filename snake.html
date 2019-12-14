@@ -12,7 +12,7 @@
     </div>
     <div class="container">
         <div class="part">
-            <div class="header player">Your Score</div>
+            <div class="header player" id="head1">Your Score</div>
             <div id="score-p" class="player">0</div>
         </div>
         <div class="part">
@@ -20,7 +20,7 @@
           <div id="target" class="player" style="color:white !important">0</div>
       </div>
         <div class="part">
-            <div class="header ai">AI Score</div>
+            <div class="header ai" id="head2">AI Score</div>
             <div id="score-a" class="ai">0</div>
         </div>
     </div>
@@ -30,7 +30,9 @@
     <div class="container">
       <div class="part">
         <button id="btnStart" onclick="removeBtnStart()">Start Game</button>
-        <button id="btnRestart" onclick="btnRestartAction()" style="display: none;">Try Again</button>
+        <button id="btnStartPVE" onclick="startPVE()" style="display: none;">Player vs AI</button>
+        <button id="btnStartEVE" onclick="startEVE()" style="display: none;">AI vs AI</button>
+        <button id="btnRestart" onclick="btnRestartAction()" style="display: none;">Restart</button>
       </div>
     </div>
     <canvas id="gameCanvas" width="500" height="500"></canvas>

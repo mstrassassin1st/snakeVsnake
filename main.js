@@ -10,6 +10,12 @@ const FOOD_BORDER_COLOUR = 'darkred';
 const SNAKE2_COLOUR = 'lightskyblue';
 const SNAKE2_BORDER_COLOUR = 'darkblue';
 const TARGET_SCORE = 150;
+let isPVE = 3;
+let listenerInitialized = 0;
+let p1 = "";
+let p2 = "";
+var trav_x1;
+var trav_y1;
 //End add
 
 //Agi add here
@@ -62,7 +68,6 @@ const ctx = gameCanvas.getContext("2d");
 // Create the first food location
 createFood();
 // Call changeDirection whenever a key is pressed
-document.addEventListener("keydown", changeDirection);
 document.getElementById("target").innerHTML = TARGET_SCORE;
 // DEPRECATED
 // document.addEventListener("keydown", changeDirection2);
@@ -77,12 +82,12 @@ function main() {
         if(ahit){
             document.getElementById("winner").style.display = "block";
             document.getElementById("winner").classList.add("player");
-            document.getElementById("winner").innerHTML = "Player Wins!";
+            document.getElementById("winner").innerHTML = p1 + " Wins!";
             win = 1;
         }else if(phit){
             document.getElementById("winner").style.display = "block";
             document.getElementById("winner").classList.add("ai");
-            document.getElementById("winner").innerHTML = "AI Wins!";
+            document.getElementById("winner").innerHTML = p2 + " Wins!";
             win = 2;
         }
         document.getElementById("btnRestart").style.display = "block";
@@ -92,7 +97,15 @@ function main() {
     changingDirection = false;
     clearCanvas();
     drawFood();
-    changeDirection2();
+    setTimeout(function(){
+        changeDirection2();
+    }, 100);
+    setTimeout(function(){
+        if(isPVE === 1){
+            console.log("a");
+            changeDirection1();
+        }
+    }, 100);
     
     advanceSnake();
     advanceSnake2();
@@ -333,6 +346,7 @@ function changeDirection(event) {
      * Snake is moving to the right. User presses down and immediately left
      * and the snake immediately changes direction without taking a step down first
      */
+    if(isPVE == 1) return;
     if (changingDirection) return;
     changingDirection = true;
     
@@ -361,6 +375,48 @@ function changeDirection(event) {
     dy = 10;
     }
 }
+
+function changeDirection1() {
+    const LEFT_KEY = 1;
+    const RIGHT_KEY = 2;
+    const UP_KEY = 3;
+    const DOWN_KEY = 4;
+    /**
+     * Prevent the snake from reversing
+     * Example scenario:
+     * Snake is moving to the right. User presses down and immediately left
+     * and the snake immediately changes direction without taking a step down first
+     */
+
+    getDirection1();
+
+    const keyPressed = decideDirection1(); 
+    const goingUp = dy === -10;
+    const goingDown = dy === 10;
+    const goingRight = dx === 10;
+    const goingLeft = dx === -10;
+    
+    if (keyPressed === LEFT_KEY && !goingRight) {
+    dx = -10;
+    dy = 0;
+    }
+    
+    if (keyPressed === UP_KEY && !goingDown) {
+    dx = 0;
+    dy = -10;
+    }
+    
+    if (keyPressed === RIGHT_KEY && !goingLeft) {
+    dx = 10;
+    dy = 0;
+    }
+    
+    if (keyPressed === DOWN_KEY && !goingUp) {
+    dx = 0;
+    dy = 10;
+    }
+}
+
 
 function changeDirection2() {
     const LEFT_KEY = 1;
@@ -423,6 +479,7 @@ function reset(){
     // The user's score
     score = 0;
     score2 = 0;
+    isPVE = 3;
     // When set to true the snake is changing direction
     changingDirection = false;
     // Food x-coordinate
@@ -445,7 +502,35 @@ function reset(){
 
 function removeBtnStart(){
     document.getElementById("btnStart").style.display = "none";
+    document.getElementById("btnStartPVE").style.display = "inline";
+    document.getElementById("btnStartEVE").style.display = "inline";
+}
+
+function startPVE(){
+    document.getElementById("btnStartPVE").style.display = "none";
+    document.getElementById("btnStartEVE").style.display = "none";
+    document.getElementById("head1").innerHTML = "Your Score";
+    document.getElementById("head2").innerHTML = "AI Score";
+    p1 = "You";
+    p2 = "AI";
     // Start game
+    isPVE = 0;
+    if(listenerInitialized == 0){
+        document.addEventListener("keydown", changeDirection);
+        listenerInitialized = 1;
+    }
+    main();
+}
+
+function startEVE(){
+    document.getElementById("btnStartPVE").style.display = "none";
+    document.getElementById("btnStartEVE").style.display = "none";
+    document.getElementById("head1").innerHTML = "AI-1 Score";
+    document.getElementById("head2").innerHTML = "AI-2 Score";
+    p1 = "AI-1";
+    p2 = "AI-2";
+    // Start game
+    isPVE = 1;
     main();
 }
 
@@ -460,7 +545,8 @@ function btnRestartAction(){
     }
     
     reset();
-    main();
+    document.getElementById("btnStartPVE").style.display = "inline";
+    document.getElementById("btnStartEVE").style.display = "inline";
 }
 
 function getSnakeCoordinates(snake_coord) {
@@ -615,6 +701,42 @@ function decideDirection() {
     } else if (trav_y < head_y) {
         return 3; //up
     } else if (trav_y > head_y) {
+        return 4; //down
+    }
+}
+
+function getDirection1() {
+
+    var head = getSnakeHead(snake);
+
+    grid = makeGrid(getSnakeCoordinates(snake), getSnakeCoordinates(snake2));
+
+    graph = new Graph(grid);
+    start = graph.grid[head[0]][head[1]];
+	end = graph.grid[foodX/10][foodY/10];
+    result = astar.search(graph, start, end);
+
+    if (typeof(result[0])  == "undefined") {
+        randChooseDirection();
+    } else {
+        trav_x1 = result[0].x;
+        trav_y1 = result[0].y;
+    }
+}
+
+function decideDirection1() {
+    var head = getSnakeHead(snake);
+
+    head_x = head[0];
+    head_y = head[1];
+
+    if (trav_x1 < head_x) {
+        return 1; //left
+    } else if (trav_x1 > head_x) {
+        return 2; //right
+    } else if (trav_y1 < head_y) {
+        return 3; //up
+    } else if (trav_y1 > head_y) {
         return 4; //down
     }
 }
